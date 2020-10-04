@@ -21,8 +21,7 @@ In order to run the project:
 3. Check methods description.
 4. Run "main.py".
 
-```
-Tips for #1 working with MYSQL:
+Tips on #1 (working with MYSQL):
 - **MySQL**: [Download](https://www.mysql.com/downloads/) & Install MySQL to your system
 - **Server**: Make sure the MySQL server is running, and that you can access the program through your `PATH`
 - **Database**: Create a new database called `MOEX` with `mysqladmin -u root -p create MOEX`
@@ -31,12 +30,11 @@ Tips for #1 working with MYSQL:
 After completing these steps, your database part should be set up and be ready to go.
 
 ```
-
 Structure of MYSQL DB: MOEX db -> "Shares" table
 			       -> "FederalBonds" table
 			       -> "CorporateEurobonds" table
 			       -> "CorporateBonds" table
-
+```
 
 ### Prerequisites
 
