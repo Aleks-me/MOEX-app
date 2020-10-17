@@ -17,8 +17,11 @@ Also this code will be useful for anyone who interested in testing of MOEX free 
 
 In order to run the project:
 1. You'll need a local MYSQL server ready and use "mysqldump" to import my test database.
-2. In the "main.py" provided rows from "config.ini" file to use with "configparser" module. 
-Create file "config.ini" in the MOEX-app directory with this setup:
+2. In the "main.py" provided rows from "config.ini" file to use with "configparser" module.
+3. Check methods description.
+4. Run "main.py".
+
+In "config.ini"
 ```
 [Database]
 secret = your_password
@@ -27,8 +30,7 @@ db_name = MOEX
 user = root
 ```
 P.S. You can use another user instead of root if yoy've created one earlier.
-3. Check methods description.
-4. Run "main.py".
+
 
 Tips on #1 (working with MYSQL):
 - **MySQL**: [Download](https://www.mysql.com/downloads/) & Install MySQL to your system
@@ -65,3 +67,4 @@ See requirements.txt
 * **Alex Kuznetsov** - *Initial work* - [ Aleks-me ](https://github.com/Aleks-me)
 
 See also the [CodingNomads](https://codingnomads.co/)
+
