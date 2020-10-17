@@ -84,7 +84,8 @@ class SLDataMYSQL:
                 except sqlalchemy.exc.SQLAlchemyError as dbe1:
                     print("Error while writing to db:", dbe1)
 
-    def query_db(self, table_name: str, instrument: str = None) -> list:
+    def query_db(self, table_name: str,
+                 instrument: str = None) -> list:
         """ Select from DB.
 
         Input:
@@ -92,7 +93,8 @@ class SLDataMYSQL:
             instrument (str): WHERE case - selecting bond or stock,
                               if not specified then return all table.
 
-        Return: list
+        Return:
+            list
         """
 
         table = sql.Table(f'{table_name}', self.metadata,
@@ -100,7 +102,7 @@ class SLDataMYSQL:
                           autoload_with=self.engine_mysql)
         try:
             if instrument:
-                query = sql.select([table]).\
+                query = sql.select([table]). \
                     where(table.c.secid == instrument)
             else:
                 query = sql.select([table])

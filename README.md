@@ -17,7 +17,16 @@ Also this code will be useful for anyone who interested in testing of MOEX free 
 
 In order to run the project:
 1. You'll need a local MYSQL server ready and use "mysqldump" to import my test database.
-2. In the "main.py" provide your MYSQL username (if you creted user) or use user='root'. You also need to use your MYSQL database password (user or root) or create an environmental variable with the password for it (like in current "main.py").
+2. In the "main.py" provided rows from "config.ini" file to use with "configparser" module. 
+Create file "config.ini" in the MOEX-app directory with this setup:
+```
+[Database]
+secret = your_password
+address = localhost
+db_name = MOEX
+user = root
+```
+P.S. You can use another user instead of root if yoy've created one earlier.
 3. Check methods description.
 4. Run "main.py".
 
@@ -36,9 +45,17 @@ Structure of MYSQL DB: MOEX db -> "Shares" table
 			       -> "CorporateBonds" table
 ```
 
+Some project use examples are provided in the "main.py" (instruments choosing, requests printing, quering database).
+
+
+THIS IS IMPORTANT!
+If you'll decide to save collected data to MOEX database, then save it to corresponding table,
+e.g. If "TQCB" board was chosen, then save data to "CorporateBonds" table. 
+
+
 ### Prerequisites
 
-In general these packages are essential: SQLAlchemy, requests, numpy, pandas, blist. 
+In general these packages are essential: SQLAlchemy, requests, numpy, pandas, blist, configparser. 
 
 See requirements.txt
 

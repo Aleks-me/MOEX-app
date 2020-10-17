@@ -1,0 +1,8 @@
+/__pycache__/
+/.idea/
+/bin/
+/lib64/
+/share/
+/venv/
+/include/
+config.ini

@@ -31,46 +31,56 @@ Decision to buy bonds must come through several things:
 - looking on the bond expiration date and current bond value.
 
 """
-import os
+from configparser import ConfigParser
 from get_data import GetMOEXData
 from save_load_data import SLDataMYSQL
 from explore_data import EDA
 from datetime import date
+from pprint import pprint
 
-"""
-[Access to the Database]
-secret = "your_password"
-address = "127.0.0.1" (or address = "localhost")
-db_name = "MOEX"
-user = "your_user_name"
-"""
-secret = os.environ["PASSWORD_MOEX"]
-address = "localhost"
-db_name = "MOEX"
-user = "aleks"
+config = ConfigParser()
+config.read('config.ini')
+
+secret = config['Database']['secret']
+address = config['Database']['address']
+db_name = config['Database']['db_name']
+user = config['Database']['user']
+
 
 if __name__ == "__main__":
-    # What I'm seeking for:
+    # What I'm seeking for (market, board):
     sh_data = GetMOEXData("shares", "TQBR")
     fb_data = GetMOEXData("bonds", "TQOB")
+    cb_data = GetMOEXData("bonds", "TQCB")
+
+    explore = EDA()
 
     # Get all data for one day:
     shares_day = sh_data.get_all_date("2020-09-08")
-    bonds_day = fb_data.get_all_date("2020-09-08")
-    explore = EDA()
-
     df_sh = explore.choose_share(shares_day)
     print(df_sh.loc[df_sh["trading_liq"] == "high"].
           sort_values(by=["vol_pct"]).to_string(), "\n")
 
+    bonds_day = fb_data.get_all_date("2020-09-08")
     df_fb = explore.choose_bond(bonds_day)
     print(df_fb.loc[df_fb["expire_date"] < date(2022, 1, 1)].
           sort_values(by=["expire_date"]).to_string(), "\n")
 
-    # Get selected instrument data for 6 months:
-    inst_data = sh_data.get_target_date_dates("MTSS", "2020-03-01",
+    # Getting info about selected instrument:
+    inst_data = cb_data.get_target_date_dates("RU000A0JUQB7",
+                                              "2020-08-01",
                                               "2020-09-09")
-    # Save data for offline use:
+    df_cb = explore.choose_bond(inst_data)
+    print(df_cb.to_string(), "\n")
+
+    # Connect to database:
     sl_data = SLDataMYSQL(address, db_name, user, secret)
-    sl_data.write_to_mysql(inst_data, "Shares")
-    saved_data = sl_data.query_db("Shares")
+
+    # # Save data for offline use:
+    # sl_data.write_to_mysql(inst_data, "CorporateBonds")
+
+    # Load existing data from database:
+    saved_data = sl_data.query_db("CorporateBonds")
+    pprint(saved_data)
+    from_test_table = sl_data.query_db('Shares')
+    pprint(from_test_table)
